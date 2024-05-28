@@ -3,7 +3,7 @@ Practica 2 en Haskell
 
 Samuel Molina Echeverri   
 
-Juan Manuel Flores Robledo
+Juan Manuel Florez Robledo
 
 Compilador: Online GDB
 
