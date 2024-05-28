@@ -1,0 +1,44 @@
+sumaAlicuota :: Int -> Int
+sumaAlicuota n = sum [x | x <- [1..n-1], n `mod` x == 0]
+clasificarCampo :: Int -> String
+clasificarCampo n
+  | sumaFactores == n = "Engineering"        -- Perfecto
+  | sumaFactores > n  = "Administrative"   -- Abundante
+  | otherwise         = "Humanities"       -- Deficiente
+  where sumaFactores = sumaAlicuota n
+
+parImpar :: Int -> String
+parImpar n
+  | n `mod` 2 == 0 = "even"
+  | otherwise      = "odd"
+
+periodo :: Int -> String
+periodo digitosPeriodo = case digitosPeriodo of
+  241 -> "2024-1"
+  242 -> "2024-2"
+  251 -> "2025-1" -- revisa los dígitos del período y les asigna la fecha establecida
+  252 -> "2025-2"
+  261 -> "2026-1"
+  262 -> "2026-2"
+  _   -> "Período Desconocido"
+
+analizarCodigo :: Int -> String
+analizarCodigo codigo = unwords [periodo digitosPeriodo, categoria, numEstudiante, parimpar2] --Orden del codigo con el unwords
+  where
+    codigoStr = replicate (8 - length (show codigo)) '0' ++ show codigo --Añadir 0 para autocompletar si no ponen un digito de 8 cifras
+ 
+    digitosPeriodo = read (take 3 codigoStr) :: Int
+    digitosCategoria = read (take 2 (drop 3 codigoStr)) :: Int --Extrer
+    numeroEstudiante = read (drop 5 codigoStr) :: Int
+    -- Clasificar la categoría
+    categoria = clasificarCampo digitosCategoria
+
+    numEstudiante = "num" ++ show numeroEstudiante
+
+    parimpar2 = parImpar codigo
+
+main :: IO ()
+main = do
+  input <- getLine
+  let codigo = read input :: Int
+  putStrLn $ analizarCodigo codigo
